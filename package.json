@@ -34,7 +34,8 @@
         "lint": "eslint .",
         "format": "prettier --write .",
         "build": "yarn lint && rollup -c",
-        "prepublishOnly": "yarn build"
+        "prepublishOnly": "yarn build",
+        "prepare": "npm run build"
     },
     "dependencies": {},
     "devDependencies": {
