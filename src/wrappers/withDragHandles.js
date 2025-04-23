@@ -85,19 +85,19 @@ export function dragHandle(handle) {
         e.preventDefault();
         isItemsDragDisabled.set(false);
 
-        // Reset isItemsDragDisabled if the user releases the mouse/touch without initiating a drag
-        const onEnd = () => {
-            isItemsDragDisabled.set(true);
-            window.removeEventListener("mouseup", onEnd);
-            window.removeEventListener("touchend", onEnd);
-        };
-
-        window.addEventListener("mouseup", onEnd);
-        window.addEventListener("touchend", onEnd);
+        // Cancel the drag start if the user releases the mouse/touch without initiating a drag
+        window.addEventListener("mouseup", cancelStartDrag);
+        window.addEventListener("touchend", cancelStartDrag);
     }
 
     function handleKeyDown(e) {
         if (e.key === "Enter" || e.key === " ") isItemsDragDisabled.set(false);
+    }
+
+    function cancelStartDrag() {
+        isItemsDragDisabled.set(true);
+        window.removeEventListener("mouseup", cancelStartDrag);
+        window.removeEventListener("touchend", cancelStartDrag);
     }
 
     isItemsDragDisabled.subscribe(disabled => {
